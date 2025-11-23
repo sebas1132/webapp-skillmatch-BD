@@ -65,8 +65,13 @@
             font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             border: none; transition: transform 0.2s;
             z-index: 1000;
+            cursor: pointer;
         }
         .fab-btn:hover { transform: scale(1.1); color: white;}
+
+        /* Badges de estado */
+        .status-en-curso { color: #198754; background-color: #e8f5e9; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold;}
+        .status-pendiente { color: #ffc107; background-color: #fff8e1; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold;}
     </style>
 </head>
 <body>
@@ -101,7 +106,7 @@
                     </div>
                     
                     <h4 class="fw-bold mb-1">{{ usuario.first_name }} {{ usuario.last_name }}</h4>
-                    <p class="text-muted mb-2 small">{{ usuario.carrera|default:"Estudiante de INACAP" }}</p>
+                    <p class="text-muted mb-2 small">Estudiante de INACAP</p>
                     
                     <div class="text-warning mb-3">
                         <i class="bi bi-star-fill"></i>
@@ -112,15 +117,8 @@
                         <span class="text-muted small text-dark">(4.5)</span>
                     </div>
 
-                    <div class="bg-light p-2 rounded mb-3 text-start">
-                        <small class="text-muted d-block mb-1 fw-bold">Sobre mí:</small>
-                        <p class="small mb-0 fst-italic">
-                            {{ usuario.biografia|default:"¡Hola! Estoy aquí para aprender y compartir conocimientos."|truncatechars:80 }}
-                        </p>
-                    </div>
-
                     <div class="d-grid">
-                        <a href="{% url 'perfil_habilidades' %}" class="btn btn-outline-danger">
+                        <a href="#" class="btn btn-outline-danger">
                             <i class="bi bi-pencil-square"></i> Editar Perfil
                         </a>
                     </div>
@@ -132,7 +130,7 @@
                 <div class="section-card">
                     <div class="section-header header-progress">
                         <span><i class="bi bi-play-circle-fill me-2"></i> En Progreso / Pendientes</span>
-                        <span class="badge bg-white text-success rounded-pill">{{ activos.count }}</span>
+                        <span class="badge bg-white text-success rounded-pill">{{ activos|length }}</span>
                     </div>
                     <div class="list-group list-group-flush">
                         {% for inter in activos %}
@@ -140,18 +138,17 @@
                             <div class="d-flex w-100 justify-content-between align-items-center">
                                 <div>
                                     <h6 class="mb-1 fw-bold">{{ inter.habilidad_buscada }} ↔ {{ inter.habilidad_ofrecida }}</h6>
-                                    <small class="text-muted">Con: {{ inter.receptor.first_name }}</small>
+                                    <small class="text-muted">Con: {{ inter.receptor }} • {{ inter.fecha }}</small>
                                 </div>
-                                <span class="badge {% if inter.estado == 'EnProgreso' %}bg-success{% else %}bg-warning text-dark{% endif %}">
-                                    {{ inter.estado }}
-                                </span>
+                                {% if inter.estado == 'EnProgreso' %}
+                                    <span class="status-en-curso">En curso</span>
+                                {% else %}
+                                    <span class="status-pendiente">Pendiente</span>
+                                {% endif %}
                             </div>
                         </div>
                         {% empty %}
-                        <div class="p-4 text-center">
-                            <p class="text-muted mb-2">No tienes actividad reciente.</p>
-                            <button class="btn btn-sm btn-success">🔍 Buscar Habilidad</button>
-                        </div>
+                        <div class="p-4 text-center text-muted">No tienes actividad reciente.</div>
                         {% endfor %}
                     </div>
                 </div>
@@ -164,7 +161,11 @@
                         {% for inter in finalizados %}
                         <div class="list-group-item p-3">
                             <div class="d-flex w-100 justify-content-between">
-                                <span class="text-decoration-line-through text-muted">{{ inter.habilidad_buscada }}</span>
+                                <div>
+                                    <span class="text-decoration-line-through text-muted">{{ inter.habilidad_buscada }}</span>
+                                    <br>
+                                    <small class="text-muted">Con: {{ inter.receptor }}</small>
+                                </div>
                                 <small class="text-success fw-bold">Completado</small>
                             </div>
                         </div>
@@ -182,7 +183,7 @@
                         {% for inter in cancelados %}
                         <div class="list-group-item p-3 bg-light">
                             <div class="d-flex w-100 justify-content-between opacity-75">
-                                <span>{{ inter.habilidad_buscada }}</span>
+                                <span>{{ inter.habilidad_buscada }} (con {{ inter.receptor }})</span>
                                 <small class="text-danger">{{ inter.estado }}</small>
                             </div>
                         </div>
@@ -197,7 +198,8 @@
     </div>
 
     <button class="fab-btn" title="Reportar o Sugerir">
-        <i class="bi bi-life-preserver"></i> </button>
+        <i class="bi bi-life-preserver"></i>
+    </button>
 
 </body>
 </html>

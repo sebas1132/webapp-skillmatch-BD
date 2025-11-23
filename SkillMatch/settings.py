@@ -82,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'skillmatch',     # <-- Debe ser el nombre que creaste.
-        'USER': 'admin',               # <-- Debe ser el usuario que creaste (o 'postgres').
+        'USER': 'postgres',               # <-- Debe ser el usuario que creaste (o 'postgres').
         'PASSWORD': 'admin1234',  # <-- Debe coincidir con la contraseña de ese usuario.
         'HOST': 'localhost', 
         'PORT': '5432',
