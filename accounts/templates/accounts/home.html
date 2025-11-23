@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillMatch — Plataforma de Intercambio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+
+<!-- NAVBAR -->
+<nav class="w-full bg-white shadow-sm fixed top-0 z-50">
+  <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
+    <h1 class="text-2xl font-bold">
+      <span class="text-red-500">Skill</span><span class="text-gray-800">Match</span>
+    </h1>
+
+    <ul class="hidden md:flex items-center gap-6 text-sm font-medium">
+      <li><a href="#features" class="hover:text-red-500">Características</a></li>
+      <li><a href="#how-it-works" class="hover:text-red-500">Cómo funciona</a></li>
+      <li><a href="{% url 'accounts:login' %}" class="hover:text-red-500">Iniciar Sesión</a></li>
+      <li>
+        <a href="{% url 'accounts:register' %}" 
+           class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+          Registrarse
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="pt-5 pb-16">
+
+  <!-- FULL WIDTH -->
+  <div class="w-full overflow-hidden">
+
+    <div class="relative w-full overflow-hidden rounded-none">
+
+      <!-- Carrusel -->
+      <div id="carousel" class="flex transition-transform duration-700">
+
+        <!-- Slide 1 -->
+     <div class="flex-shrink-0 w-full h-[420px] bg-cover bg-center flex items-center"
+     style="background-image: url('https://images.unsplash.com/photo-1508780709619-79562169bc64');">
+
+          <div class="bg-black/40 w-full h-full flex flex-col justify-center px-10">
+            <h1 class="text-4xl md:text-5xl text-white font-bold mb-4">SkillMatch</h1>
+            <h2 class="text-xl text-gray-200 mb-4">
+              Plataforma de Intercambio de Habilidades Académicas
+            </h2>
+            <p class="text-gray-300 mb-6 max-w-xl">
+              Conecta con estudiantes de INACAP Sede Maipú para potenciar tu aprendizaje colaborativo.
+            </p>
+
+            <div class="flex flex-wrap gap-4">
+              <a href="{% url 'accounts:register' %}"
+                class="px-6 py-3 bg-red-600 text-white rounded-lg text-lg hover:bg-red-700 transition">
+                Comenzar Ahora
+              </a>
+
+              <a href="{% url 'accounts:login' %}"
+                class="px-6 py-3 border border-white text-white rounded-lg text-lg hover:bg-white hover:text-black transition">
+                Iniciar Sesión
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="flex-shrink-0 w-full h-[420px] bg-cover bg-center flex items-center"
+             style="background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d');">
+          <div class="bg-black/40 w-full h-full flex flex-col justify-center px-10">
+            <h1 class="text-4xl md:text-5xl text-white font-bold mb-4">Aprende Compartiendo</h1>
+            <p class="text-gray-200 max-w-xl">
+              Publica habilidades que dominas y encuentra compañeros dispuestos a ayudarte.
+            </p>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="flex-shrink-0 w-full h-[420px] bg-cover bg-center flex items-center"
+             style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b');">
+          <div class="bg-black/40 w-full h-full flex flex-col justify-center px-10">
+            <h1 class="text-4xl md:text-5xl text-white font-bold mb-4">Conexiones Inteligentes</h1>
+            <p class="text-gray-200 max-w-xl">
+              El sistema te recomienda estudiantes según tus intereses académicos.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Controles -->
+      <button id="prev"
+        class="absolute left-4 top-1/2 -translate-y-1/2 text-4xl text-white drop-shadow-lg hover:scale-125 transition">
+        ‹
+      </button>
+
+      <button id="next"
+        class="absolute right-4 top-1/2 -translate-y-1/2 text-4xl text-white drop-shadow-lg hover:scale-125 transition">
+        ›
+      </button>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto text-center px-5">
+    <h2 class="text-3xl font-bold mb-3">Potencia tu Aprendizaje</h2>
+    <p class="text-gray-600 mb-10">
+      Conecta, colabora y crece con la comunidad INACAP
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      
+      <div class="border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition bg-white">
+        <h4 class="font-semibold text-lg">Comparte Habilidades</h4>
+        <p class="text-gray-600 mt-2">
+          Ofrece tus conocimientos y ayuda a otros compañeros.
+        </p>
+      </div>
+
+      <div class="border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition bg-white">
+        <h4 class="font-semibold text-lg">Encuentra Ayuda</h4>
+        <p class="text-gray-600 mt-2">
+          Busca estudiantes que puedan ayudarte en materias específicas.
+        </p>
+      </div>
+
+      <div class="border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition bg-white">
+        <h4 class="font-semibold text-lg">Construye Comunidad</h4>
+        <p class="text-gray-600 mt-2">
+          Forma parte de una red colaborativa dentro de INACAP.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works" class="py-16">
+  <div class="max-w-5xl mx-auto text-center px-5">
+    
+    <h2 class="text-3xl font-bold mb-3">¿Cómo funciona?</h2>
+    <p class="text-gray-600 mb-10">
+      En 3 simples pasos comienza a intercambiar conocimientos
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-10">
+
+      <div>
+        <div class="w-16 h-16 mx-auto bg-red-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">1</div>
+        <h4 class="font-semibold text-lg">Regístrate</h4>
+        <p class="text-gray-600 mt-2">
+          Crea tu cuenta con tu correo institucional @inacap.cl
+        </p>
+      </div>
+
+      <div>
+        <div class="w-16 h-16 mx-auto bg-red-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">2</div>
+        <h4 class="font-semibold text-lg">Configura tu Perfil</h4>
+        <p class="text-gray-600 mt-2">
+          Indica tus habilidades y las áreas donde necesitas apoyo.
+        </p>
+      </div>
+
+      <div>
+        <div class="w-16 h-16 mx-auto bg-red-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4">3</div>
+        <h4 class="font-semibold text-lg">Conecta</h4>
+        <p class="text-gray-600 mt-2">
+          Encuentra compañeros para estudiar o colaborar.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 bg-red-500 text-white">
+  <div class="max-w-4xl mx-auto text-center px-5">
+    <h2 class="text-4xl font-bold mb-4">¿Listo para comenzar?</h2>
+    <p class="text-lg mb-6">
+      Únete a la comunidad de SkillMatch y potencia tu aprendizaje colaborativo.
+    </p>
+    <a href="{% url 'accounts:register' %}" 
+       class="px-8 py-3 bg-white text-red-600 rounded-lg font-semibold hover:bg-gray-100 transition">
+      Crear Cuenta Gratis
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-white py-6">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between px-5">
+    <div>
+      <h3 class="text-lg font-semibold">
+        <span class="text-red-500">Skill</span>Match
+      </h3>
+      <p class="text-gray-300 text-sm">
+        Plataforma de Intercambio Académico – INACAP Maipú
+      </p>
+    </div>
+
+    <div class="text-sm text-gray-400 mt-4 md:mt-0 flex gap-4">
+      <a href="#" class="hover:text-white">Términos</a>
+      <a href="#" class="hover:text-white">Privacidad</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+let index = 0;
+const carousel = document.getElementById("carousel");
+const totalSlides = carousel.children.length;
+
+document.getElementById("next").onclick = () => {
+    index = (index + 1) % totalSlides;
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+};
+
+document.getElementById("prev").onclick = () => {
+    index = (index - 1 + totalSlides) % totalSlides;
+    carousel.style.transform = `translateX(-${index * 100}%)`;
+};
+</script>
+
+</body>
+</html>

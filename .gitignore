@@ -1,0 +1,69 @@
+# ========================
+# 1. SEGURIDAD Y CREDENCIALES (¡CRUCIAL!)
+# ========================
+
+# Nunca subir el archivo de variables de entorno (donde irá la SECRET_KEY y las credenciales de BD)
+.env
+
+# ========================
+# 2. ENTORNO VIRTUAL
+# ========================
+
+# Directorios de entornos virtuales (el que se usa en tu proyecto es 'venv')
+venv/
+env/
+
+# ========================
+# 3. ARCHIVOS GENERADOS POR PYTHON / CACHÉ
+# ========================
+
+# Bytecode de Python
+__pycache__/
+*.pyc
+
+# Archivos de caché
+.pytest_cache/
+.tox/
+.mypy_cache/
+
+# ========================
+# 4. ARCHIVOS GENERADOS POR DJANGO
+# ========================
+
+# Base de datos SQLite (si todavía existe y no es la de producción)
+db.sqlite3
+
+# Archivos de la base de datos de producción (PostgreSQL en tu caso, aunque no se guardan directamente)
+# Es una buena práctica excluirlos si por alguna razón los tienes.
+*.sql
+*.sqlite
+*.sqlite3
+
+# Archivos de logs
+*.log
+
+# Archivos estáticos recolectados (destino del collectstatic)
+/staticfiles/
+/static_root/
+
+# Archivos subidos por el usuario
+/media/
+
+# ========================
+# 5. CONFIGURACIÓN DEL EDITOR (VS CODE)
+# ========================
+
+# Excluir la carpeta de configuración de VS Code
+.vscode/
+
+# ========================
+# 6. MIGRACIONES VACÍAS
+# ========================
+
+# Excluir la carpeta de las migraciones iniciales para evitar conflictos al clonar
+# Aunque generalmente se incluyen, si tienes problemas iniciales, puedes excluirlas temporalmente.
+# Pero, por defecto, deberían incluirse:
+# */migrations/*.py
+
+# Excluir archivos de editor
+*~

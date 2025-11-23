@@ -1,0 +1,228 @@
+/* Variables CSS - Colores Corporativos INACAP */
+:root {
+    --primary-red: #E30613;
+    --secondary-red: #B30000;
+    --white: #FFFFFF;
+    --black: #000000;
+    --gray-light: #F5F5F5;
+    --gray-dark: #333333;
+    --gray-border: #E0E0E0;
+}
+
+/* Estilos Generales */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--white);
+    color: var(--black);
+    margin: 0;
+    padding: 0;
+}
+
+/* Layout del Mockup */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Banner Superior - Como en el mockup */
+.auth-banner {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--secondary-red) 100%);
+    color: var(--white);
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="rgba(255,255,255,0.1)"><polygon points="50,0 100,50 50,100 0,50"/></svg>');
+    background-size: 80px 80px;
+}
+
+.auth-banner h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    position: relative;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.auth-banner .subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    position: relative;
+}
+
+/* Form Container */
+.auth-form-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: var(--white);
+}
+
+.auth-form-wrapper {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Campos de formulario como en el mockup */
+.form-field {
+    margin-bottom: 1.5rem;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--gray-border);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--white);
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.1);
+}
+
+/* Botón Principal */
+.btn-primary-custom {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--secondary-red) 100%);
+    color: var(--white);
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(227, 6, 19, 0.3);
+}
+
+/* Enlaces y texto */
+.auth-links {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.auth-links a {
+    color: var(--primary-red);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+/* Separador "OR" como en el mockup */
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 2rem 0;
+    color: var(--gray-dark);
+    font-weight: 600;
+}
+
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--gray-border);
+}
+
+.separator span {
+    padding: 0 1rem;
+}
+
+/* Términos y condiciones */
+.terms {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-border);
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+}
+
+.terms a {
+    color: var(--primary-red);
+    text-decoration: none;
+}
+
+.terms a:hover {
+    text-decoration: underline;
+}
+
+/* Mensajes de error */
+.error-message {
+    color: var(--primary-red);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .auth-banner {
+        padding: 2rem 1rem;
+    }
+    
+    .auth-banner h1 {
+        font-size: 2.5rem;
+    }
+    
+    .auth-form-container {
+        padding: 1rem;
+    }
+}
+
+/* Efectos visuales adicionales */
+.input-field::placeholder {
+    color: #999;
+    opacity: 0.7;
+}
+
+/* Estado de validación */
+.input-field.valid {
+    border-color: #28a745;
+}
+
+.input-field.invalid {
+    border-color: var(--primary-red);
+}
+
+/* Loading state */
+.btn-loading {
+    opacity: 0.7;
+    pointer-events: none;
+}

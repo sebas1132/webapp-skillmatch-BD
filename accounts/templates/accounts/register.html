@@ -1,0 +1,106 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkillMatch - Registro</title>
+
+    <link rel="stylesheet" href="{% static 'accounts/css/register.css' %}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 class="title"><span>Skill</span>Match</h1>
+
+    <form method="POST" class="form">
+        {% csrf_token %}
+
+        <!-- DATOS PERSONALES -->
+        <div class="card">
+            <h2>Datos personales</h2>
+
+            <label>Nombre completo</label>
+            <input type="text" name="nombre" placeholder="Tu nombre y apellido" />
+
+            <label>Correo institucional</label>
+            <input type="email" name="email" placeholder="tu.correo@inacap.cl" />
+
+            <label>Contraseña</label>
+            <input type="password" name="password1" placeholder="Crea una contraseña segura" />
+
+            <label>Confirmar contraseña</label>
+            <input type="password" name="password2" placeholder="Repite tu contraseña" />
+        </div>
+
+        <!-- ACADÉMICO -->
+        <div class="card">
+            <h2>Información académica</h2>
+
+            <label>Carrera</label>
+            <select name="carrera">
+                <option disabled selected>Selecciona tu carrera</option>
+                <option>Analista Programador</option>
+                <option>Ingeniería en Informática</option>
+                <option>Diseño Digital</option>
+            </select>
+
+            <label>Sede/Campus</label>
+            <select name="sede">
+                <option disabled selected>Selecciona tu sede o campus</option>
+                <option>Santiago Sur</option>
+                <option>Maipú</option>
+                <option>La Serena</option>
+            </select>
+        </div>
+
+        <!-- SOBRE MI -->
+        <div class="card">
+            <h2>Sobre mí</h2>
+
+            <label>Biografía (0/300 caracteres)</label>
+            <textarea name="bio" maxlength="300" placeholder="Cuéntanos sobre ti y tus intereses (máx. 300 caracteres)"></textarea>
+        </div>
+
+        <!-- HABILIDADES -->
+        <div class="card">
+            <h2>Habilidades</h2>
+
+            <label>Ofrezco</label>
+            <button type="button" class="btn-add" onclick="agregarChip('chipsOfrezco')">+ Añadir</button>
+
+            <div id="chipsOfrezco">
+                <span class="chip">React</span>
+                <span class="chip">TypeScript</span>
+                <span class="chip">TailwindCSS</span>
+                <span class="chip">Desarrollo Frontend</span>
+            </div>
+
+            <label style="margin-top:20px;">Busco</label>
+            <button type="button" class="btn-add" onclick="agregarChip('chipsBusco')">+ Añadir</button>
+
+            <div id="chipsBusco">
+                <span class="chip">UX/UI Design</span>
+                <span class="chip">Gestión de Proyectos</span>
+                <span class="chip">Inteligencia Artificial</span>
+                <span class="chip">Marketing Digital</span>
+            </div>
+        </div>
+
+        <button class="btn-submit" type="submit">Crear cuenta</button>
+
+    </form>
+
+    <p class="login">
+        ¿Ya tienes una cuenta?  
+        <a href="{% url 'accounts:login' %}" id="loginLink">Iniciar sesión</a>
+    </p>
+
+</div>
+
+<script src="{% static 'accounts/js/register.js' %}"></script>
+</body>
+</html>
