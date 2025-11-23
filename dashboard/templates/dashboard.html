@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SkillMatch</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --inacap-red: #D02D38; 
+            --inacap-dark: #333333;
+            --bg-color: #F4F6F9;
+        }
+        body { background-color: var(--bg-color); color: var(--inacap-dark); }
+
+        /* Navbar */
+        .navbar-inacap { background-color: var(--inacap-red); }
+        
+        /* Tarjeta de Perfil (Izquierda) */
+        .profile-card {
+            border: none;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-align: center;
+            padding: 30px 20px;
+        }
+        .profile-img {
+            width: 120px; height: 120px;
+            background-color: #eee;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; color: #aaa; border: 4px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Cajas de Intercambio (Derecha) */
+        .section-card {
+            border: none; border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .section-header {
+            padding: 15px 20px;
+            font-weight: bold; color: white;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        /* Colores para los encabezados de las cajas */
+        .header-progress { background-color: #28a745; } /* Verde */
+        .header-finished { background-color: #6c757d; } /* Gris */
+        .header-canceled { background-color: #dc3545; } /* Rojo */
+
+        /* Botón Flotante (FAB) */
+        .fab-btn {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 60px; height: 60px;
+            background-color: #f1c40f; /* Amarillo de tu imagen */
+            color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: none; transition: transform 0.2s;
+            z-index: 1000;
+        }
+        .fab-btn:hover { transform: scale(1.1); color: white;}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-inacap mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">SkillMatch 🚀</a>
+            <div class="d-flex gap-3 align-items-center">
+                <div class="text-white position-relative">
+                    <i class="bi bi-bell fs-5"></i>
+                    {% if notificaciones_count > 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark" style="font-size: 0.6rem;">
+                        {{ notificaciones_count }}
+                    </span>
+                    {% endif %}
+                </div>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-outline-light border-0">Cerrar Sesión</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-lg-3 mb-4">
+                <div class="profile-card">
+                    <div class="profile-img">
+                        {{ usuario.first_name|slice:":1" }}
+                    </div>
+                    
+                    <h4 class="fw-bold mb-1">{{ usuario.first_name }} {{ usuario.last_name }}</h4>
+                    <p class="text-muted mb-2 small">{{ usuario.carrera|default:"Estudiante de INACAP" }}</p>
+                    
+                    <div class="text-warning mb-3">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                        <span class="text-muted small text-dark">(4.5)</span>
+                    </div>
+
+                    <div class="bg-light p-2 rounded mb-3 text-start">
+                        <small class="text-muted d-block mb-1 fw-bold">Sobre mí:</small>
+                        <p class="small mb-0 fst-italic">
+                            {{ usuario.biografia|default:"¡Hola! Estoy aquí para aprender y compartir conocimientos."|truncatechars:80 }}
+                        </p>
+                    </div>
+
+                    <div class="d-grid">
+                        <a href="{% url 'perfil_habilidades' %}" class="btn btn-outline-danger">
+                            <i class="bi bi-pencil-square"></i> Editar Perfil
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+
+                <div class="section-card">
+                    <div class="section-header header-progress">
+                        <span><i class="bi bi-play-circle-fill me-2"></i> En Progreso / Pendientes</span>
+                        <span class="badge bg-white text-success rounded-pill">{{ activos.count }}</span>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for inter in activos %}
+                        <div class="list-group-item list-group-item-action p-3">
+                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1 fw-bold">{{ inter.habilidad_buscada }} ↔ {{ inter.habilidad_ofrecida }}</h6>
+                                    <small class="text-muted">Con: {{ inter.receptor.first_name }}</small>
+                                </div>
+                                <span class="badge {% if inter.estado == 'EnProgreso' %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                                    {{ inter.estado }}
+                                </span>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="p-4 text-center">
+                            <p class="text-muted mb-2">No tienes actividad reciente.</p>
+                            <button class="btn btn-sm btn-success">🔍 Buscar Habilidad</button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header header-finished">
+                        <span><i class="bi bi-check-circle-fill me-2"></i> Historial Finalizado</span>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for inter in finalizados %}
+                        <div class="list-group-item p-3">
+                            <div class="d-flex w-100 justify-content-between">
+                                <span class="text-decoration-line-through text-muted">{{ inter.habilidad_buscada }}</span>
+                                <small class="text-success fw-bold">Completado</small>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="p-3 text-center text-muted small">Sin historial aún.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header header-canceled">
+                        <span><i class="bi bi-x-circle-fill me-2"></i> Cancelados / Rechazados</span>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for inter in cancelados %}
+                        <div class="list-group-item p-3 bg-light">
+                            <div class="d-flex w-100 justify-content-between opacity-75">
+                                <span>{{ inter.habilidad_buscada }}</span>
+                                <small class="text-danger">{{ inter.estado }}</small>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="p-3 text-center text-muted small">Limpio. No hay cancelaciones.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <button class="fab-btn" title="Reportar o Sugerir">
+        <i class="bi bi-life-preserver"></i> </button>
+
+</body>
+</html>
