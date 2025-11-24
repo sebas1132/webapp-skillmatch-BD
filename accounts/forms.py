@@ -14,6 +14,24 @@ class CustomUserCreationForm(UserCreationForm):
             'required': 'required'
         })
     )
+
+    first_name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={
+            'class': 'input-field',
+            'placeholder': 'Tu nombre y apellido',
+            'required': 'required'
+        })
+    )
+
+    last_name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={
+            'class': 'input-field',
+            'placeholder': 'Tu nombre y apellido',
+            'required': 'required'
+        })
+    )
     
     password1 = forms.CharField(
         widget=forms.PasswordInput(attrs={
@@ -33,7 +51,7 @@ class CustomUserCreationForm(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ('email', 'password1', 'password2')
+        fields = ('first_name','last_name','email', 'password1', 'password2')
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -49,7 +67,8 @@ class CustomUserCreationForm(UserCreationForm):
         return email
 
 class CustomAuthenticationForm(AuthenticationForm):
-    username = forms.EmailField(
+    username  = forms.EmailField(
+        label="Email",
         widget=forms.EmailInput(attrs={
             'class': 'input-field',
             'placeholder': 'usuario@inacap.cl',

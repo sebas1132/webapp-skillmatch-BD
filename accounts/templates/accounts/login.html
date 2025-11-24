@@ -18,28 +18,28 @@
             <span class="logo-red">Skill</span>Match
         </h1>
 
-        <form method="POST" class="form">
-            {% csrf_token %}
+     <form method="POST" class="form">
+    {% csrf_token %}
 
-            {% if form.errors %}
-                <div style="color: #D02D38; margin-bottom: 15px; text-align: center; font-size: 0.9rem;">
-                    <p>⚠ Correo o contraseña incorrectos.</p>
-                </div>
-            {% endif %}
+    {% if form.errors %}
+        <div style="color: #D02D38; margin-bottom: 15px; text-align: center; font-size: 0.9rem;">
+            <p>⚠ Correo o contraseña incorrectos.</p>
+        </div>
+    {% endif %}
 
-            <label for="id_username">Email institucional</label>
-            <input type="text" id="id_username" name="username" required placeholder="ejemplo@inacap.cl">
+    <label for="{{ form.username.id_for_label }}">Email institucional</label>
+    {{ form.username }}
 
-            <label for="id_password">Contraseña</label>
-            <input type="password" id="id_password" name="password" required>
+    <label for="{{ form.password.id_for_label }}">Contraseña</label>
+    {{ form.password }}
 
-            <button type="submit" class="btn-primary">Iniciar Sesión</button>
+    <button type="submit" class="btn-primary">Iniciar Sesión</button>
 
-            <a href="{% url 'accounts:register' %}">
-                <button type="button" class="btn-secondary">Registrate</button>
-            </a>
+    <a href="{% url 'accounts:register' %}">
+        <button type="button" class="btn-secondary">Registrate</button>
+    </a>
+</form>
 
-        </form>
 
         <div class="divider">
             <span>O</span>

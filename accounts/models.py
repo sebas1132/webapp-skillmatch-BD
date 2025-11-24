@@ -17,6 +17,8 @@ class Usuario(models.Model):
     
     # Datos Personales
     nombre = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     
     # Datos Institucionales/Login

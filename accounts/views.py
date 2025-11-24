@@ -10,40 +10,51 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm, CustomPassw
 def login_view(request):
     if request.method == 'POST':
         form = CustomAuthenticationForm(request, data=request.POST)
-        
+
         if form.is_valid():
             email = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            
-            # INTENTO DE AUTENTICACIÓN
-            print(f"Intentando loguear a: {email}") 
+
+            print("Intentando login con email:", email)
+
             user = authenticate(request, username=email, password=password)
-            
-            if user is not None:
-                print("¡Usuario encontrado! Redirigiendo...")
+
+            if user:
                 login(request, user)
-                return redirect('dashboard')  # <--- Aquí es donde queremos llegar
-            else:
-                print("Error: Usuario o contraseña incorrectos (authenticate devolvió None)")
-                messages.error(request, 'Correo o contraseña incorrectos.')
+                return redirect('dashboard')
+
+            print("Credenciales incorrectas")
+
+            messages.error(request, 'Correo o contraseña incorrectos.')
         else:
-            print("Error: El formulario no es válido")
-            print(form.errors) # Esto te dirá qué campo está fallando
+            print("Formulario inválido:", form.errors)
             messages.error(request, 'Datos inválidos.')
+
     else:
         form = CustomAuthenticationForm()
-    
+
     return render(request, 'accounts/login.html', {'form': form})
 
 
 def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
+        print(form)
         if form.is_valid():
             user = form.save()
-            login(request, user)
+
+            # Autenticar al usuario recién creado usando su email
+            auth_user = authenticate(
+                request,
+                username=user.email,
+                password=form.cleaned_data['password1']
+            )
+
+            # Forzar backend para evitar el error
+            login(request, auth_user, backend='django.contrib.auth.backends.ModelBackend')
+
             messages.success(request, '¡Registro exitoso! Bienvenido a SkillMatch.')
-            return redirect('accounts:dashboard')
+            return redirect('accounts:login')
         else:
             messages.error(request, 'Por favor corrige los errores en el formulario.')
     else:
