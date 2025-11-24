@@ -152,5 +152,15 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_USE_SSL = False
 EMAIL_USE_TLS = True
 
+# --- CONFIGURACIÓN DE REDIRECCIÓN (SkillMatch) ---
 
+# 1. ¿A dónde voy si inicio sesión correctamente? -> A TU Dashboard
+LOGIN_REDIRECT_URL = 'dashboard'
+
+# 2. ¿A dónde me manda Django si intento entrar al Dashboard sin permiso?
+#    (Usa el login de la app 'accounts' de tu compañero)
+LOGIN_URL = 'accounts:login'
+
+# 3. ¿A dónde voy si cierro sesión? -> Al Home o al Login
+LOGOUT_REDIRECT_URL = 'accounts:login'
 

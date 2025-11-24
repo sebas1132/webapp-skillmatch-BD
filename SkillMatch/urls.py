@@ -1,15 +1,17 @@
 from django.contrib import admin
 from django.urls import path, include
-# from django.shortcuts import redirect (Ya no es estrictamente necesario si usamos include, pero puedes dejarlo)
+from django.contrib.auth import views as auth_views # Para el logout si accounts no lo tiene
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     
-    # 1. App de tus compañeros (Maneja Login, Home, etc.)
+    # 1. App de ACCOUNTS (Maneja '', 'login/', 'register/')
+    # Como tiene path('', ...), esta app controlará la página de inicio.
     path('', include('accounts.urls')), 
     
-    # 2. TU App (Maneja Dashboard, y tus vistas temporales de Registro/Perfil)
-    # Al ponerlo también en '', las rutas se suman.
-    # Django buscará: localhost:8000/dashboard/ -> Irá a dashboard.urls
-    path('', include('dashboard.urls')), 
+    # 2. App de DASHBOARD (Maneja 'dashboard/')
+    path('', include('dashboard.urls')),
+    
+    # 3. Logout (Por seguridad, lo agregamos aquí si accounts no lo tiene)
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]

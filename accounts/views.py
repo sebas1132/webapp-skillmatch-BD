@@ -10,16 +10,26 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm, CustomPassw
 def login_view(request):
     if request.method == 'POST':
         form = CustomAuthenticationForm(request, data=request.POST)
+        
         if form.is_valid():
             email = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
+            
+            # INTENTO DE AUTENTICACIÓN
+            print(f"Intentando loguear a: {email}") 
             user = authenticate(request, username=email, password=password)
+            
             if user is not None:
+                print("¡Usuario encontrado! Redirigiendo...")
                 login(request, user)
-                messages.success(request, f'¡Bienvenido de nuevo, {email}!')
-                return redirect('accounts:dashboard')
+                return redirect('dashboard')  # <--- Aquí es donde queremos llegar
+            else:
+                print("Error: Usuario o contraseña incorrectos (authenticate devolvió None)")
+                messages.error(request, 'Correo o contraseña incorrectos.')
         else:
-            messages.error(request, 'Correo o contraseña incorrectos.')
+            print("Error: El formulario no es válido")
+            print(form.errors) # Esto te dirá qué campo está fallando
+            messages.error(request, 'Datos inválidos.')
     else:
         form = CustomAuthenticationForm()
     
