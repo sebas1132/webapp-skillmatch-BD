@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillMatch - Login</title>
 
-    <!-- CSS -->
     <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
 </head>
 
@@ -15,22 +14,26 @@
 
     <div class="container">
 
-        <!-- Logo -->
         <h1 class="logo">
             <span class="logo-red">Skill</span>Match
         </h1>
 
-        <!-- Formulario -->
         <form method="POST" class="form">
             {% csrf_token %}
 
-            <label for="email">Email institucional</label>
-            <input type="email" id="email" name="email">
+            {% if form.errors %}
+                <div style="color: #D02D38; margin-bottom: 15px; text-align: center; font-size: 0.9rem;">
+                    <p>⚠ Correo o contraseña incorrectos.</p>
+                </div>
+            {% endif %}
 
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password">
+            <label for="id_username">Email institucional</label>
+            <input type="text" id="id_username" name="username" required placeholder="ejemplo@inacap.cl">
 
-            <button type="submit" class="btn-primary">Iniciar Sesion</button>
+            <label for="id_password">Contraseña</label>
+            <input type="password" id="id_password" name="password" required>
+
+            <button type="submit" class="btn-primary">Iniciar Sesión</button>
 
             <a href="{% url 'accounts:register' %}">
                 <button type="button" class="btn-secondary">Registrate</button>
@@ -38,26 +41,22 @@
 
         </form>
 
-        <!-- Divider -->
         <div class="divider">
-            <span>OR</span>
+            <span>O</span>
         </div>
 
-        <!-- Forgot password -->
         <a href="{% url 'accounts:password_reset' %}">
-            <button class="forgot">¿Has olvidado tu contraseña ?</button>
+            <button class="forgot">¿Has olvidado tu contraseña?</button>
         </a>
 
-        <!-- Footer -->
         <p class="footer">
-            By continuing, you agree to our 
-            <a href="#">Terms of Services</a> and 
-            <a href="#">Private Policy</a>.
+            Al continuar, aceptas nuestros 
+            <a href="#">Términos de Servicio</a> y 
+            <a href="#">Política de Privacidad</a>.
         </p>
 
     </div>
 
-    <!-- JS opcional -->
     <script src="{% static 'accounts/js/login.js' %}"></script>
 
 </body>
